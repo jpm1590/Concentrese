@@ -13,18 +13,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author jpm1590
  */
 public class InitBoard {
-    
-    private Card[][] bCard;
+
     private Board gameBoard;
+    private Card[][] bCard;
     private int parejas;
+    private int lifes;
+    private int asserts;
 
     public Card[][] getbCard() {
         return bCard;
@@ -49,7 +49,23 @@ public class InitBoard {
     public void setParejas(int parejas) {
         this.parejas = parejas;
     }
-    
+
+    public int getLifes() {
+        return lifes;
+    }
+
+    public void setLifes(int lifes) {
+        this.lifes = lifes;
+    }
+
+    public int getAsserts() {
+        return asserts;
+    }
+
+    public void setAsserts(int asserts) {
+        this.asserts = asserts;
+    }
+
     public List allCards(char[] palo, char[] number) {
 
         List<Card> allCards = new ArrayList<>();
@@ -95,7 +111,7 @@ public class InitBoard {
         return bCards;
     }
 
-    public void init() throws IOException{
+    public void init() throws IOException {
         String boardSize;
         Board board;
 
@@ -110,29 +126,25 @@ public class InitBoard {
         Card[][] bCards;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        /*
+        System.out.println("Ingrese las columnas del tablero: ");
+        boardColumn = Integer.parseInt(br.readLine());
+        System.out.println("Ingrese las filas del tablero: ");
+        boardRow = Integer.parseInt(br.readLine());//*/
+        setParejas(boardColumn * boardRow / 2);
 
-        /*System.out.println("Ingrese el tamaño del tablero: ");
+        boardCards = selectBoardCards(allCards, boardColumn, boardRow);
 
+        bCards = fillBoardCards(boardCards, boardColumn, boardRow);
 
-            
-            boardSize = br.readLine();
-            boardColumn = Integer.parseInt(boardSize);
-            boardRow = Integer.parseInt(boardSize);//*/
-            
-            setParejas(boardColumn * boardRow / 2);
-            
-            boardCards = selectBoardCards(allCards, boardColumn, boardRow);
+        setbCard(bCards);
 
-            bCards = fillBoardCards(boardCards, boardColumn, boardRow);
-            
-            setbCard(bCards);
-            
-            board = createBoard(boardColumn, boardRow, bCards);
-            
-            setGameBoard(board);
-            
-            System.out.println(board);
+        board = createBoard(boardColumn, boardRow, bCards);
+
+        setGameBoard(board);
+
+        System.out.println(board);
 
     }
-    
+
 }

@@ -20,7 +20,6 @@ public class Play {
         System.out.println("\t2. Reiniciar partida");
         System.out.println("\t0. Salir");
         System.out.println("");
-
     }
 
     public static Card jugar(Card[][] boardCards, int i) throws IOException {
@@ -66,38 +65,42 @@ public class Play {
         InitBoard ib = new InitBoard();
 
         Card[][] boardCards;
-        int parejas;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         ib.init();
         boardCards = ib.getbCard();
-        parejas = ib.getParejas();
 
-        int lifes = 5;
-        int correct = 0;
+        ib.setLifes(5);
+        ib.setAsserts(0);
 
         do {
-            Play.menu(lifes, correct);
+            Play.menu(ib.getLifes(), ib.getAsserts());
             switch (br.readLine()) {
                 case "1":
                     if (!Play.isValidMove(boardCards, ib.getGameBoard())) {
-                        lifes--;
+                        ib.setLifes(ib.getLifes() - 1);
                     } else {
-                        correct++;
+                        ib.setAsserts(ib.getAsserts() + 1);
                     }
                     System.out.println(ib.getGameBoard());
                     break;
                 case "2":
+                    ib.setLifes(-1);
                     Play.main(args);
                     break;
-                default:
+                case "0":
                     System.exit(0);
                     break;
+                default:
+                    System.out.println("OPCION NO VALIDA, INTENTE DE NUEVO!!!!");
+                    System.out.println("--------------------------------------");
+                    System.out.println();
+                    break;
             }
-        } while (lifes != 0 && correct != parejas);
+        } while (ib.getLifes() > 0 && ib.getAsserts() != ib.getParejas());
 
-        if (correct == parejas) {
+        if (ib.getAsserts() == ib.getParejas()) {
             System.out.println(
                     "***************************************\n"
                     + "***************************************\n"
@@ -108,23 +111,25 @@ public class Play {
                     + "***************************************\n"
                     + "***************************************");
         } else {
-            System.out.println(
-                    "***************************************\n"
-                    + "***************************************\n"
-                    + "*********** V U E L V A   A ***********\n"
-                    + "********* I N T E N T A R L O *********\n"
-                    + "***************************************\n"
-                    + "********* H A   P E R D I D O *********\n"
-                    + "***************************************\n"
-                    + "***************************************");
+            if (ib.getLifes() == 0) {
+                System.out.println(
+                        "***************************************\n"
+                        + "***************************************\n"
+                        + "*********** V U E L V A   A ***********\n"
+                        + "********* I N T E N T A R L O *********\n"
+                        + "***************************************\n"
+                        + "********* H A   P E R D I D O *********\n"
+                        + "***************************************\n"
+                        + "***************************************");
 
-            for (Card[] bCard : ib.getbCard()) {
-                for (Card item : bCard) {
-                    item.setState(3);
+                for (Card[] bCard : ib.getbCard()) {
+                    for (Card item : bCard) {
+                        item.setState(3);
+                    }
                 }
-            }
 
-            System.out.println(ib.getGameBoard());
+                System.out.println(ib.getGameBoard());
+            }
         }
     }
 }

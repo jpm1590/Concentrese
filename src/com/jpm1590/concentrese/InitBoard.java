@@ -112,7 +112,6 @@ public class InitBoard {
     }
 
     public void init() throws IOException {
-        String boardSize;
         Board board;
 
         int boardColumn = 3;

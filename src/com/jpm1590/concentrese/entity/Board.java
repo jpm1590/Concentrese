@@ -37,6 +37,14 @@ public class Board {
         this.row = row;
     }
 
+    public Card[][] getCards() {
+        return cards;
+    }
+
+    public void setCards(Card[][] cards) {
+        this.cards = cards;
+    }
+
     @Override
     public String toString() {
 

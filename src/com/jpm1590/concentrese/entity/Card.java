@@ -71,7 +71,6 @@ public class Card {
                 break;
         }
 
-        //return number + "" + palo;
         return card;
     }
 
